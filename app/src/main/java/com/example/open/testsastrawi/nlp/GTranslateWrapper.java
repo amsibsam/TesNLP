@@ -1,4 +1,4 @@
-package com.example.open.testsastrawi;
+package com.example.open.testsastrawi.nlp;
 
 
 import android.os.AsyncTask;
@@ -15,14 +15,6 @@ import java.util.List;
 /**
  * Created by Rahardyan on 12/2/2017.
  */
-interface OnTranslated {
-    void onTranslated(String text);
-}
-
-interface OnDetected {
-    void onDetected(String language);
-}
-
 public class GTranslateWrapper {
     private static GTranslateWrapper instance = new GTranslateWrapper();
 
@@ -75,5 +67,13 @@ public class GTranslateWrapper {
                 listener.onDetected(s);
             }
         }.execute();
+    }
+
+    public interface OnTranslated {
+        void onTranslated(String text);
+    }
+
+    public interface OnDetected {
+        void onDetected(String language);
     }
 }
