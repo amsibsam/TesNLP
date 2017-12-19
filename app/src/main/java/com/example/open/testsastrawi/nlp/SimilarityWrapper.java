@@ -46,7 +46,7 @@ public class SimilarityWrapper {
             try {
                 throw new Exception("call init() before getInstance");
             } catch (Exception e) {
-                e.printStackTrace();   
+                e.printStackTrace();
             }
         }
 
