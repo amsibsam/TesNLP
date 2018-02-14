@@ -1,5 +1,7 @@
 package com.example.open.testsastrawi.nlp;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,20 +16,20 @@ import info.debatty.java.stringsimilarity.Levenshtein;
  */
 
 public class SimilarityWrapper {
-    private static SimilarityWrapper instance;
+    private static final String TAG = SimilarityWrapper.class.getSimpleName();
+    private static SimilarityWrapper instance = new SimilarityWrapper();
     private Levenshtein levenshteinSimilarity;
     private List<String> dictionary = new ArrayList<>();
 
     private SimilarityWrapper() {
         this.levenshteinSimilarity = new Levenshtein();
+        initDictionary();
     }
 
-    public void init() throws Exception {
+    private void initDictionary() {
         if (instance != null) {
-            throw new Exception("cant init more than one");
+            Log.d(TAG, "init: cant init more than one");
         }
-
-        instance = new SimilarityWrapper();
         InputStream in = SimilarityWrapper.class.getResourceAsStream("/root-words.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 

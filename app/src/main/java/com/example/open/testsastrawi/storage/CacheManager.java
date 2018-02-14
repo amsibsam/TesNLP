@@ -54,7 +54,11 @@ public class CacheManager {
             if (!jsonModelList.isEmpty()) {
                 NBTrainingModelList modelListObj = gson.fromJson(jsonModelList, NBTrainingModelList.class);
 
-                modelListObj.getTraningData().addAll(modelList.getTraningData());
+                for (NBTrainingModel newTrainingModel: modelList.getTraningData()) {
+                    if (!modelListObj.getTraningData().contains(newTrainingModel)) {
+                        modelListObj.getTraningData().addAll(modelList.getTraningData());
+                    }
+                }
 
                 String newJsonModelList = gson.toJson(modelListObj);
                 preferences.edit().putString("training_data", newJsonModelList).apply();

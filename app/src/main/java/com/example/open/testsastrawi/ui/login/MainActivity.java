@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.example.open.testsastrawi.R;
 import com.example.open.testsastrawi.model.User;
 import com.example.open.testsastrawi.nlp.SastrawiWrapper;
+import com.example.open.testsastrawi.nlp.naivebeyesclassifier.NaiveBeyesClassifier;
 import com.example.open.testsastrawi.storage.CacheManager;
 import com.example.open.testsastrawi.ui.chat.ChatActivity;
 
@@ -18,13 +19,80 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUsername;
     private Button btnLogin;
 
+    private String[] words = {
+            "Nerjang",
+            "Nuduh",
+            "Nerima",
+            "negur",
+            "mukul",
+            "Mimpin",
+            "nyoba",
+            "nyiram",
+            "Nyuruh",
+            "Nyimpen",
+            "Nyebrang",
+            "Nganggep",
+            "Ngamuk",
+            "Ngambil",
+            "Ngebuka",
+            "Ngebantu",
+            "Ngelepas",
+            "Kebayang",
+            "Keinjek",
+            "Kekabul",
+            "Kepergok",
+            "Ketipu",
+            "Keulang",
+            "Kewujud",
+            "Critain",
+            "Betulin",
+            "Manjain",
+            "Gangguin",
+            "Gantian",
+            "Ikutan",
+            "Musuhan",
+            "Sabunan",
+            "Temenan",
+            "Tukeran",
+            "nanyain",
+            "nunjukin",
+            "mentingin",
+            "megangin",
+            "nyelametin",
+            "nyempetin",
+            "ngorbanin",
+            "ngadepin",
+            "ngebuktiin",
+            "ngewarnain",
+            "Kedengeran",
+            "ketemuan",
+            "beneran",
+            "ginian",
+            "kawinan",
+            "mainan",
+            "parkiran",
+            "duluan",
+            "gendutan",
+            "karatan",
+            "palingan",
+            "sabaran",
+            "kebagusan",
+            "sanaan",
+            "cepetan",
+            "sepagian"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
 
-        Log.d(TAG, "lemmatize " + SastrawiWrapper.getInstance().getLemmatizer().lemmatize("ajarin"));
+        for (String word: words) {
+            Log.d(TAG, "onCreate: stemm result " + word + " > " + SastrawiWrapper.getInstance().getLemmatizer().lemmatize(word));
+        }
+
+//        Log.d(TAG, "onCreate: stemm " + SastrawiWrapper.getInstance().getLemmatizer().lemmatize("nerjang"));
     }
 
     private void setupUI() {

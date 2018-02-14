@@ -2,6 +2,8 @@ package com.example.open.testsastrawi.model;
 
 import android.content.Context;
 
+import com.example.open.testsastrawi.nlp.SastrawiWrapper;
+import com.example.open.testsastrawi.nlp.SimilarityWrapper;
 import com.example.open.testsastrawi.nlp.naivebeyesclassifier.training.NBTrainingDataInstance;
 
 import java.util.ArrayList;
@@ -70,39 +72,49 @@ public class Marine {
 //    public String proccessInput(String inputText) {
 //
 //    }
+    public String getResponse(String category, String inputText) {
+        if (category.equals("greetings")) {
+            return getGreeting(inputText);
+        } else if (category.equals("goodbye")) {
+            return "";
+        } else if (category.equals("personal")) {
+            return "";
+        }
 
-    public String getGreeting(String initialText) {
+        return "Aku g tau km bilang apa";
+    }
+
+    public String getGreeting(String input) {
+        String[] inputTokens = SastrawiWrapper.getInstance().getTokenizer().tokenize(input.toLowerCase());
         List<String> responses = new ArrayList<>();
         responses.add("Waalaikumussalam");
         responses.add("Halo");
         responses.add("Hai");
         responses.add("ada yang bisa dibantu ?");
 
-        if (initialText.toLowerCase().contains("assalamualaikum") || initialText.toLowerCase().contains("assalamualaykum")) {
-            return responses.get(0);
-        } else {
-            responses.remove(0);
-            int index = new Random().nextInt(2);
-            return responses.get(index);
+        int tokenIndex = 0;
+        for (String inputToken: inputTokens) {
+            if (SimilarityWrapper.getInstance().calculateDistance(inputToken, "assalamualaikum") <= 3) {
+                return responses.get(0);
+            } else if (SimilarityWrapper.getInstance().calculateDistance(inputToken, "selamat") <= 2) {
+                return "Selamat "+inputTokens[tokenIndex + 1];
+            }
+
+            tokenIndex++;
         }
+
+        responses.remove(0);
+        int index = new Random().nextInt(3);
+        return responses.get(index);
     }
 
-    public String getResponse(String input) {
-        if (input.toLowerCase().contains("siapa") && (input.toLowerCase().contains("nama") ||
-                input.toLowerCase().contains("namamu") ||
-                input.toLowerCase().contains("nama mu")||
-                (input.toLowerCase().contains("siapa") && (input.toLowerCase().contains("kamu") ||
-                        input.toLowerCase().contains("anda" ) || input.toLowerCase().contains("dirimu") ||
-                        input.toLowerCase().contains("kau"))))) {
-            List<String> response = new ArrayList<>();
-            response.add("Nama saya");
-            response.add("saya");
-            response.add("");
+//    public String getPersonalResponse(String input) {
+//        String[] inputTokens = SastrawiWrapper.getInstance().getTokenizer().tokenize(input);
+//        int tokenIndex = 0;
+//        for (String inputToken: inputTokens) {
+//            if ()
+//        }
+//    }
 
-            int index = new Random().nextInt(2);
-            return (response.get(index) + " " + getName()).trim();
-        } else {
-            return "";
-        }
-    }
+
 }

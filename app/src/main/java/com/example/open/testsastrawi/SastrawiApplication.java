@@ -14,8 +14,6 @@ public class SastrawiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SastrawiWrapper.init();
-        SimilarityWrapper.getInstance().init();
         Marine.init(this);
     }
 }

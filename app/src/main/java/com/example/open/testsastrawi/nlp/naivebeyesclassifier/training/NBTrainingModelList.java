@@ -16,4 +16,15 @@ public class NBTrainingModelList {
     public List<NBTrainingModel> getTraningData() {
         return traningData;
     }
+
+    public int getDataSize(String wordClass) {
+        int count = 0;
+        for (NBTrainingModel trainingModel: traningData) {
+            if (trainingModel.getWordClass().equals(wordClass)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }

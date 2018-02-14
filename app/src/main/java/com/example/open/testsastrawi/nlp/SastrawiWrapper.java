@@ -1,5 +1,7 @@
 package com.example.open.testsastrawi.nlp;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,24 +12,20 @@ import java.util.concurrent.ExecutionException;
 
 import jsastrawi.morphology.DefaultLemmatizer;
 import jsastrawi.morphology.Lemmatizer;
+import jsastrawi.tokenization.HeuristicTokenizer;
+import jsastrawi.tokenization.Tokenizer;
 
 /**
  * Created by Rahardyan on 12/1/2017.
  */
 
 public class SastrawiWrapper {
-    private static SastrawiWrapper instance;
+    private static final String TAG = SastrawiWrapper.class.getSimpleName();
+    private static SastrawiWrapper instance = new SastrawiWrapper();
     private Lemmatizer lemmatizer;
+    private Tokenizer tokenizer;
 
     public static SastrawiWrapper getInstance() {
-        if (instance == null) {
-            try {
-                throw new Exception("call init first");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         return instance;
     }
 
@@ -46,17 +44,12 @@ public class SastrawiWrapper {
             e.printStackTrace();
         }
         lemmatizer = new DefaultLemmatizer(dictionary);
+        tokenizer = new HeuristicTokenizer();
     }
 
-    public static void init() throws Exception {
-        if (instance != null) {
-            instance = new SastrawiWrapper();
-        } else {
-            throw new Exception("cant init more than one");
-        }
-        //        initialize dictionary
+    public Tokenizer getTokenizer() {
+        return this.tokenizer;
     }
-
     public Lemmatizer getLemmatizer() {
         return this.lemmatizer;
     }
